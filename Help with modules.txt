@@ -1,0 +1,56 @@
+Hello all
+
+This is the help file
+For the audio module in which our assistance listens us, here are the
+steps to make it works it one of us run into an AttributeError
+
+def takeCommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+The def above need these modules to work in a way
+that doesn't show us any error.
+
+import speech_recognition as sr 
+#pip install SpeechRecognition
+The above is the easy way
+
+The hard way in case it doesn't want to work (my case)
+follow This
+
+First verify your python version
+by typing into cmd, powershell or terminal 
+>_ python --version
+
+Second
+type python into the terminal so you can enter to the python shell
+and then you will see a text like this:
+
+"PS C:\WINDOWS\system32> python
+Python 3.8.5 (tags/v3.8.5:580fbb0, Jul 20 2020, 15:57:54) [MSC v.1924 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information."
+The above is the full query, just in case you dont know how to put it
+Now i know that my python version is "3.8 and the arquitecture 64-bit AMD64".
+
+Third, then you have to go and find the correct ".whl" file
+in the URL: https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
+for example, mine was python 3.8, AMD64, windows
+so my ".whl" file was: pyaudio-0.2.11-cp38-cp38-win_amd64.whl
+
+Fourth, after i downloaded the file i choose to install it with admin rights
+"PS D:\Descargas> pip install .\PyAudio-0.2.11-cp38-cp38-win_amd64.whl"
+
+And this is the result:
+Processing d:\descargas\pyaudio-0.2.11-cp38-cp38-win_amd64.whl
+Installing collected packages: PyAudio
+Successfully installed PyAudio-0.2.11
+
+After that you shall continue with the develop of the AI-Assistant
+
+Greetings
+
+
+
