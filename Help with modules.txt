@@ -2,7 +2,9 @@ Hello all
 
 This is the help file
 For the audio module in which our assistance listens us, here are the
-steps to make it works it one of us run into an AttributeError
+steps to make it works 
+
+error type: "it one of us run into an AttributeError"
 
 def takeCommand():
     r = sr.Recognizer()
