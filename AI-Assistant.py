@@ -76,4 +76,103 @@ def takeCommand():
     return query
 takeCommand()
 
+## email feature
+def sendmail(to, content):
+    msg = MIMEMultipart()
+    msg.attach(MIMEText("Hello, my name is December", 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com: 587')
+    server.ehlo()
+    server.starttls()
+    server.login("userr@gmail.com","Password")
+    server.sendmail("user@gmail.com", to, content)
+    server.quit()
+
+##In this we are giving the power to take screenshots or screencapture when we told it to do it
+def screenshot():
+    screencapture = pyautogui.screenshot()
+    screencapture.save("D:\Documentos\Proyectos\AI - Inteligencia Artificial\Proyectos\sc.png")
+
+def cpu():
+    usage = str(psutil.cpu_percent())
+    speak("CPU is at " + usage)
+    print(usage)
+   # cpu_temp = psutil.sensors_temperatures(fahrenheit=False)()
+   # speak("CPU temp is at "+ cpu_temp)
+   # print(cpu_temp)
+   # fans = psutil.sensors_fans()
+   # speak("Fans are at "+ fans)
+   # print(fans)
+   # speak("CPU temp is at " + str(psutil.sensors_temperatures()))
+   # speak("Fans are at " + psutil.sensors_fans)
+    
+    battery = psutil.sensors_battery()
+    speak("Battery is at ") 
+    speak(battery.percent)
+    print(battery.percent)
+
+def jokes():
+    speak(pyjokes.get_joke())
+
+if __name__ == "__main__":
+    wishme()
+    while True:
+        query = takeCommand().lower()
+        print(query)
+        if "time" in query:
+            time()
+        elif "date" in query:
+            date()
+        elif "offline" in query:
+            quit()
+        elif "wikipedia" in query: #ver como hacer un comando global
+            speak("Searching...")
+            query = query.replace("wikipedia","")
+            result = wikipedia.summary(query, sentences=2)
+            speak(result)
+            ## Here December will tell us what she is looking at
+            ## and the results, aun necesita mejoras..      
+        elif "send email" in query:
+            try: ## Will ask us what the mail should contain
+                speak("Sir, what should I say?")
+                content = takeCommand()
+                to = "user@gmail.com"
+                sendmail(to, content)
+                #speak(content)
+                speak("Sir the email was successfully sent to the recipient.")
+            except Exception as e:
+                    speak(e)
+                    speak("Sir im unable to send the email") 
+        elif "search in chrome" in query:
+            speak("Sir, what should I search?")
+            chromepath = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %s"
+            search = takeCommand().lower()
+            wb.get(chromepath).open_new_tab(search + ".com")
+        elif "logout" in query: ##log off, the same as type win logon + L
+            os.system("shutdown -l")
+        elif "shutdown" in query: ##shutdown in 1 min, can be less if we choose zero = 0, than 1
+            os.system("shutdown /s /t 1")
+        elif "restart" in query: ##restart the computer
+            os.system("shutdown /r /t 1")
+        elif "play music" in query: ##Play music inside a folder
+            songs_dir = "D:\Música"
+            songs = os.listdir(songs_dir)
+            os.startfile(os.path.join(songs_dir, songs[0])) ## This one is under development because can be used for path traversal
+        elif "Remember that" in query: #Recordar cosas
+            speak("What should I remember?")
+            data = takeCommand()
+            speak("Sir, you told me to remember" + data)
+            Remember = open("data.txt", "w")
+            Remember.write(data)
+            Remember.close()
+        elif "What we have for on point" in query: #The AI assistant will tell us what he/she saved
+            Remember = open("data.txt", "r")
+            speak("Sir, you told me to remember that"+Remember.read())
+        elif "screenshot" in query: #The AI wil tell us that he/she took the screenshot
+            screenshot()
+            speak("Sir, I took the screenshot")
+        elif "cpu" in query:
+            cpu()
+        elif "joke" in query:
+            jokes()
+
 
